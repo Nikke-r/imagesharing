@@ -1,0 +1,23 @@
+{
+  "name": "imagesharing",
+  "version": "1.0.0",
+  "description": "Image Sharing app project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikke-r/imagesharing.git"
+  },
+  "author": "Niklas Rönnholm, Mikael Ruonala, Jere Laitila",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Nikke-r/imagesharing/issues"
+  },
+  "homepage": "https://github.com/Nikke-r/imagesharing#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.1"
+  }
+}
