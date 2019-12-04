@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllUsers = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM wop_user');
+        const [rows] = await promisePool.query('SELECT * FROM kkk_users');
         return rows;
     } catch (e) {
         console.log('error', e.message);
@@ -14,7 +14,7 @@ const getAllUsers = async () => {
 const getUser = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'SELECT * FROM wop_user WHERE user_id = ?;',
+            'SELECT * FROM kkk_users WHERE username = ?;',
             params,
         );
         return rows;
@@ -26,7 +26,7 @@ const getUser = async(params) => {
 const addUser = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'INSERT INTO wop_user (name, email, password) VALUES (?, ?, ?);',
+            'INSERT INTO kkk_users (username, email, password) VALUES (?, ?, ?);',
             params,
         );
         return rows;
