@@ -3,18 +3,14 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
-const catController = require('../controllers/catController');
+const postController = require('../controllers/postController');
 
-router.get('/', catController.cat_list_get);
+router.get('/', postController.post_list_get);
 
-router.get('/:id', catController.cat_get);
+router.get('/:id', postController.post_get);
 
+router.post('/', upload.single('post'), postController.post_create);
 
-router.post('/', upload.single('cat'), catController.cat_create_post);
-
-
-router.put('/', catController.cat_modify);
-
-router.delete('/:id', catController.cat_delete);
+router.delete('/:id', postController.post_delete);
 
 module.exports = router;

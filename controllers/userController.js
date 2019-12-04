@@ -15,8 +15,8 @@ const user_get = async (req, res) => {
 
 };
 
-const user_create_post = async(req, res) => {
-    const params = [req.body.name, req.body.email, req.body.passwd];
+const user_create = async(req, res) => {
+    const params = [req.body.username, req.body.email, req.body.password];
     console.log(params);
     const response = await userModel.addUser(params);
     console.log(response);
@@ -29,5 +29,5 @@ const user_create_post = async(req, res) => {
 module.exports = {
     user_list_get,
     user_get,
-    user_create_post,
+    user_create,
 };

@@ -7,7 +7,9 @@ router.get('/', userController.user_list_get);
 
 router.get('/:id', userController.user_get);
 
-router.post('/', userController.user_create_post);
+router.post('/', userController.user_create);
+
+/*
 
 router.put('/', (req, res) => {
     res.send('With this endpoint you can modify users.');
@@ -16,5 +18,5 @@ router.put('/', (req, res) => {
 router.delete('/', (req, res) => {
     res.send('With this endpoint you can delete users.');
 });
-
+*/
 module.exports = router;
