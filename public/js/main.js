@@ -5,7 +5,7 @@ const ul = document.querySelector('.main ul');
 const main = document.getElementsByClassName("main")[0];
 const forms = document.getElementsByClassName("forms")[0];
 const image = document.querySelector('img');
-
+/*
 forms.innerHTML =
     `
             <div class="form-wrapper">
@@ -35,7 +35,7 @@ registerForm.addEventListener("submit", async (evt) => {
     sessionStorage.setItem('token', json.token);
     main.style.display = 'none';
 });
-
+*/
 const createPosts = (posts) => {
     ul.innerHTML = '';
     posts.forEach((post) =>{
@@ -85,13 +85,27 @@ const createPosts = (posts) => {
             //todo lisää nappula tokeni validityn mukaan.
             ul.appendChild(li);
 
-        })
-
-
+        });
 
     });
 
 };
 
+const getPost = async () => {
+    console.log('getPost token ', sessionStorage.getItem('token'));
+    try {
+        const options = {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const response = await fetch(url + '/post', options);
+        const posts = await response.json();
+        createPosts(posts);
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+};
 
 

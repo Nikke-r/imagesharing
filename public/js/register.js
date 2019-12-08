@@ -35,3 +35,19 @@ registerForm.addEventListener("submit", async (evt) => {
     sessionStorage.setItem('token', json.token);
     main.style.display = 'none';
 });
+
+// login
+
+main.innerHTML =
+    `
+            <div class="form-wrapper">
+            <form id="login-form" enctype="multipart/form-data">
+            <input class="light-border" type="text" name="username" placeholder="Username" required>
+            <input class="light-border" type="password" name="password" placeholder="Password" required>
+            <button class="light-border" type="submit" name="submit">Log in</button>
+            </form>
+            </div>   
+        `;
+
+const loginForm = document.querySelector('login-form');
+
