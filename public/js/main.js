@@ -8,15 +8,6 @@ const topnav = document.getElementsByClassName("topnav")[0];
 
 const userHasToken = async () => {
     if (sessionStorage.getItem('token') != null) {
-        try {
-            const fetchOptions = {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-                }
-            };
-            const response = await fetch (url + "/user/session", fetchOptions);
-            const result = await response.json();
             topnav.innerHTML =
                 `
                 <div id="profile">
@@ -24,9 +15,7 @@ const userHasToken = async () => {
                     <img id="logout" src="img/logout.png" alt="Logout icon" onclick="logOut()">
                 </div>
                 `;
-        } catch (e) {
-            console.log(e);
-        }
+
     } else {
         topnav.innerHTML =
             `
