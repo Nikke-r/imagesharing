@@ -1,4 +1,4 @@
-const url = 'http://10.114.34.121/app';
+const url = 'http://localhost:3000';
 
 const main = document.getElementsByClassName("main")[0];
 const forms = document.getElementsByClassName('forms')[0];
@@ -30,7 +30,7 @@ const createProfile = async () => {
                 <form class="light-border"
                       enctype="multipart/form-data"
                       id="add-post-form">
-                    <input class="light-border" type="text" name="name" placeholder="Description">
+                    <input class="light-border" type="text" name="description" placeholder="Description">
                     <input class="light-border"
                            type="file"
                            name="post"
@@ -42,7 +42,8 @@ const createProfile = async () => {
             </div>
             `;
 
-    const postForm =document.querySelector('add-post-form');
+    const postForm = document.getElementById('add-post-form');
+
 
     postForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
