@@ -9,10 +9,12 @@ const bcrypt = require('bcryptjs');
 const userModel = require('../models/userModel');
 
 passport.use(new Strategy(
-    async (email, password, done) => {
-        const params = [email];
+    async (username, password, done) => {
+        const params = [username];
+        console.log(params);
         try {
-            const [user] = await userModel.getUserEmail(params); //Or what function searches the user from database
+            const [user] = await userModel.getUser(params); //Or what function searches the user from database
+          console.log(user);
             if (user === undefined) { // user not found
                 return done(null, false);
             }

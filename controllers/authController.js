@@ -6,7 +6,9 @@ const {validationResult} = require('express-validator');
 const userModel = require('../models/userModel');
 
 const login = (req, res) => {
+    console.log(req.body);
     passport.authenticate('local', {session: false}, (err, user, info) => {
+        console.log(user);
         if (err || !user) {
             return res.status(400).json({
                 message: 'Something is not right',

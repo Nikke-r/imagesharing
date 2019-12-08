@@ -1,11 +1,13 @@
-const url = 'http://10.114.34.121/app';
+const url = 'http://localhost:3000';
 const forms = document.getElementsByClassName("forms")[0];
 
 const loginForm = document.getElementById("login-form");
 loginForm.addEventListener("submit", async (evt) => {
     evt.preventDefault();
     try {
+        console.log('1');
         const data = serializeJson(loginForm);
+        console.log('2');
         const fetchOptions = {
             method: 'POST',
             headers: {
@@ -13,6 +15,7 @@ loginForm.addEventListener("submit", async (evt) => {
             },
             body: JSON.stringify(data),
         };
+        console.log('3');
         const response = await fetch(url + "/auth/login", fetchOptions);
         const json = await response.json();
         console.log(json);

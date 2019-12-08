@@ -4,6 +4,7 @@ const router = express.Router();
 const {body, sanitizeBody} = require('express-validator');
 const authController = require('../controllers/authController');
 const multer = require('multer');
+const passport = require('passport');
 
 router.post('/login', authController.login);
 router.get('/logout' , authController.logout);

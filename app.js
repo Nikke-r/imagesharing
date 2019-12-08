@@ -5,8 +5,8 @@ const app = express();
 const port = 3000;
 const passport = require('./utils/passport');
 
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static('public'));
 
 app.use('/thumbnails', express.static('thumbnails'));

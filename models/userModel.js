@@ -14,7 +14,7 @@ const getAllUsers = async () => {
 const getUser = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'SELECT * FROM kkk_users WHERE user_id = ?;',
+            'SELECT * FROM kkk_users WHERE username = ?;',
             params,
         );
         return rows;
@@ -36,6 +36,7 @@ const getUserEmail = async (params) => {
 
 const addUser = async(params) => {
     try {
+        console.log('whiip');
         const [rows] = await promisePool.execute(
             'INSERT INTO kkk_users (username, email, password) VALUES (?, ?, ?);',
             params,
