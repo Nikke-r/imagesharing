@@ -1,10 +1,20 @@
 'use strict';
 const postModel = require('../models/postModel');
 const resize = require('../utils/resize');
+const passport = require('passport');
 
-const post_list_get = async (req, res) => {
-    const posts = await postModel.getAllPosts();
-    await res.json(posts);
+const post_list_get = (req, res) => {
+    passport.authenticate('jwt', ({session: false}), async (error, user, info) => {
+      if (error) {
+          console.log(error);
+      }
+      if (info != undefined) {
+          console.log(info.message);
+      } else {
+          const posts = await postModel.getAllPosts();
+          await res.json({user, posts});
+      }
+    })(req, res)
 };
 
 const post_create = async(req, res) => {
