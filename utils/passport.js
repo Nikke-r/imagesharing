@@ -9,10 +9,10 @@ const bcrypt = require('bcryptjs');
 const userModel = require('../models/userModel');
 
 passport.use(new Strategy(
-    async (username, password, done) => {
-        const params = [username];
+    async (email, password, done) => {
+        const params = [email];
         try {
-            const [user] = await userModel.getUser(params); //Or what function searches the user from database
+            const [user] = await userModel.getUserEmail(params); //Or what function searches the user from database
             if (user === undefined) { // user not found
                 return done(null, false);
             }
@@ -28,7 +28,7 @@ passport.use(new Strategy(
 
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey   : 'process.env.Secret_Token'
+    secretOrKey   : 'Secret_Token'
     },
     (jwtPayload, done) => {
           done(null, jwtPayload);
