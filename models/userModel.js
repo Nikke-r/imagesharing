@@ -14,10 +14,22 @@ const getAllUsers = async () => {
 const getUser = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'SELECT * FROM kkk_users WHERE username = ?;',
+            'SELECT * FROM kkk_users WHERE user_id = ?;',
             params,
         );
         return rows;
+    } catch(e) {
+        console.log('error', e.message);
+    }
+};
+
+const getUserByName = async (param) => {
+    try {
+        const [user] = await promisePool.execute(
+            'SELECT * FROM kkk_users WHERE username = ?;',
+            param,
+        );
+        return user;
     } catch(e) {
         console.log('error', e.message);
     }
@@ -53,4 +65,5 @@ module.exports = {
     getUser,
     getUserEmail,
     addUser,
+    getUserByName
 };

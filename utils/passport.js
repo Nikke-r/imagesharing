@@ -12,7 +12,7 @@ passport.use(new Strategy(
     async (username, password, done) => {
         const params = [username];
         try {
-            const [user] = await userModel.getUser(params); //Or what function searches the user from database
+            const [user] = await userModel.getUserByName(params); //Or what function searches the user from database
             if (user === undefined) { // user not found
                 return done(null, false);
             }
