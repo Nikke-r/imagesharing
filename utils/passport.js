@@ -32,6 +32,12 @@ passport.use(new JWTStrategy({
     },
     (jwtPayload, done) => {
       if (jwtPayload != null) {
+        //Delete unnecessary info from payload
+        delete jwtPayload.email;
+        delete jwtPayload.username;
+        delete jwtPayload.iat;
+
+        //Send payload forward
         done(null, jwtPayload);
       }
     }

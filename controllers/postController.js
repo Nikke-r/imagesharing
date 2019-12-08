@@ -8,7 +8,7 @@ const post_list_get = (req, res) => {
       if (error) {
           console.log(error);
       }
-      if (info != undefined) {
+      if (info !== undefined) {
           console.log(info.message);
       } else {
           const posts = await postModel.getAllPosts();
