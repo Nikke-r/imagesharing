@@ -92,21 +92,24 @@ const createPosts = (posts) => {
             const delButton = document.createElement('button');
             delButton.innerHTML = 'Delete';
             delButton.addEventListener('click', async () => {
-                const fetchOptions = {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                let confirmation = confirm('Are you sure you want to delete this post?');
+                if (confirmation) {
+                    const fetchOptions = {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                        }
+                    };
+                    try {
+                        const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
+                        const json = await response.json();
+                        console.log('delete: ', json);
+                        getPosts();
+                    } catch(e){
+                        console.log('error:' + e);
                     }
-                };
-                try {
-                    const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
-                    const json = await response.json();
-                    console.log('delete: ', json);
-                    getPosts();
-                    // TODO get a single post
-                } catch(e){
-                    console.log('error:' + e);
                 }
+
             });
 
             //Create Like/Dislike button
