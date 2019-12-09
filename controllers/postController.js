@@ -2,6 +2,7 @@
 const postModel = require('../models/postModel');
 const resize = require('../utils/resize');
 const passport = require('passport');
+const fs = require('fs');
 
 const post_list_get = async (req, res) => {
     const posts = await postModel.getAllPosts();
@@ -22,7 +23,7 @@ const post_create = (req, res) => {
             try {
                 await resize.makeThumbnail(req.file.path, 'thumbnails/' + req.file.filename, {width: 600, height: 600},);
 
-                //Fet current day as YYYY-MM-DD format
+                //Get current day as YYYY-MM-DD format
                 const date = new Date();
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1;
@@ -45,7 +46,6 @@ const post_get = async (req, res) => {
     const params = [req.params.id];
     const post = await postModel.getPost(params);
     await res.json(post[0]);
-
 };
 
 const post_delete = (req, res) => {

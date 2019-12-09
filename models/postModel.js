@@ -53,7 +53,7 @@ const deletePost = async(params) => {
     try {
         const [likes] = await promisePool.execute('DELETE FROM kkk_likes WHERE post_id = ?', params);
         const [post] = await promisePool.execute('DELETE FROM kkk_posts WHERE post_id = ?', params);
-        return `${likes}, ${post}`;
+        return {likes, post};
     }catch(e){
         console.log('error', e.message);
         return {error: 'error in database query'};
