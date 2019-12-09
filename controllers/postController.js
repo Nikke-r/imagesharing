@@ -20,7 +20,7 @@ const post_create = (req, res) => {
         } else {
             //createthumbnail
             try {
-                await resize.makeThumbnail(req.file.path, 'thumbnails/' + req.file.filename, {width: 160, height: 160},);
+                await resize.makeThumbnail(req.file.path, 'thumbnails/' + req.file.filename, {width: 600, height: 600},);
 
                 //Fet current day as YYYY-MM-DD format
                 const date = new Date();
