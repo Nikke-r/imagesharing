@@ -1,6 +1,5 @@
 'use strict';
 const userModel = require('../models/userModel');
-const passport = require('passport');
 
 //const users = userModel.users;
 

@@ -84,13 +84,28 @@ const get_likes = (req, res) => {
       if (error) {
           console.log(error);
       }
-      if (info != undefined) {
+      if (info !== undefined) {
           console.log(info.message);
       } else {
-          const response = await postModel.getLikes([req.params.id]);
-          await res.json(response);
+          const likes = await postModel.getLikes([req.params.id]);
+          const users = await postModel.getLikeNames([req.params.id]);
+          await res.json({likes, users});
       }
   })(req, res);
+};
+
+const delete_like = (req, res) => {
+    passport.authenticate('jwt', ({session: false}), async (error, user, info) => {
+        if (error) {
+            console.log(error);
+        }
+        if (info !== undefined) {
+            console.log(info.message);
+        } else {
+            const response = await postModel.deleteLike([user.user_id, req.params.id]);
+            await res.json(response);
+        }
+    })(req, res);
 };
 
 module.exports = {
@@ -99,5 +114,6 @@ module.exports = {
     post_create,
     post_delete,
     add_like,
-    get_likes
+    get_likes,
+    delete_like
 };

@@ -52,7 +52,7 @@ const updatePost = async(params) => {
 const deletePost = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'DELETE FROM kkk_posts WHERE post_id = ?;',
+            'DELETE kkk_likes, kkk_posts FROM kkk_likes JOIN kkk_posts ON kkk_likes.post_id = kkk_posts.post_id WHERE kkk_likes.post_id = ?',
             params,
         );
         return rows;
@@ -75,12 +75,31 @@ const addLike = async (params) => {
 
 const getLikes = async (param) => {
     try {
-        const [rows] = await promisePool.execute('SELECT COUNT(*) AS likes FROM kkk_likes WHERE post_id = ?', param);
-        console.log(rows);
+        const [rows] = await promisePool.execute('SELECT COUNT(post_id) AS likes FROM kkk_likes WHERE post_id = ?', param);
         return rows;
     } catch (e) {
         console.log('getLikes error ' + e);
         return {errormessage: 'Error getting likes'};
+    }
+};
+
+const getLikeNames = async (param) => {
+    try {
+        const [rows] = await promisePool.execute('SELECT user_id FROM kkk_likes WHERE post_id = ?', param);
+        return rows;
+    } catch (e) {
+        console.log('getLikeNames error + ' + e);
+        return {errormessage: 'Cannot get like names'};
+    }
+};
+
+const deleteLike = async (params) => {
+    try {
+        const [rows] = await promisePool.execute('DELETE FROM kkk_likes WHERE user_id = ? AND post_id = ?', params);
+        return rows;
+    } catch (e) {
+        console.log(e);
+        return {errormessage: 'Error disliking the post'}
     }
 };
 
@@ -91,5 +110,7 @@ module.exports = {
     updatePost,
     deletePost,
     addLike,
-    getLikes
+    getLikes,
+    getLikeNames,
+    deleteLike
 };
