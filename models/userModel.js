@@ -48,7 +48,6 @@ const getUserEmail = async (params) => {
 
 const addUser = async(params) => {
     try {
-        console.log('whiip');
         const [rows] = await promisePool.execute(
             'INSERT INTO kkk_users (username, email, password) VALUES (?, ?, ?);',
             params,

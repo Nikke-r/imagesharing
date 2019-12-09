@@ -36,8 +36,7 @@ const logOut = async () => {
         };
         const response = await fetch (url + "/auth/logout", fetchOptions);
         const result = await response.json();
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem('id');
+        sessionStorage.clear();
         window.location.replace("index.html")
     } catch (e) {
         console.log(e);
