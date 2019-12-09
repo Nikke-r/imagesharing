@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllPosts = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT kkk_posts.*, kkk_users.username FROM kkk_posts left join kkk_users on kkk_posts.user_id = kkk_users.username');
+        const [rows] = await promisePool.query('SELECT kkk_posts.*, kkk_users.username AS username FROM kkk_posts LEFT JOIN kkk_users ON kkk_posts.user_id = kkk_users.user_id');
         return rows;
     } catch (e) {
         console.log('error', e.message);
