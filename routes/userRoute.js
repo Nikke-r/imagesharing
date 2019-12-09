@@ -7,8 +7,6 @@ router.get('/', userController.user_list_get);
 
 router.get('/:id', userController.user_get);
 
-router.post('/', userController.user_create);
-
 router.post('/session', userController.user_get_session);
 
 router.put('/', (req, res) => {
