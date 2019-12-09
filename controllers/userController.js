@@ -18,22 +18,8 @@ const user_get_session = async (req, res) => {
     await res.json(result);
 };
 
-const user_create = async (req, res) => {
-    const params = [
-    req.body.username, 
-    req.body.email, 
-    req.body.password,
-    ];
-    const response = await userModel.addUser(params);
-    console.log(params);
-    console.log(response);
-    await res.json(response);
-    //const user = await userModel.getUser([response.insertId]);
-};
-
 module.exports = {
     user_list_get,
     user_get,
     user_get_session,
-    user_create,
 };
