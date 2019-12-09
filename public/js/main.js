@@ -46,6 +46,9 @@ const logOut = async () => {
 
 const createPosts = (posts) => {
     ul.innerHTML = '';
+
+    console.log(posts);
+
     posts.forEach((post) =>{
         const img = document.createElement('img');
         img.src = url + '/thumbnails/' + post.filename;
@@ -83,12 +86,59 @@ const createPosts = (posts) => {
                 console.log('error:' + e);
             }
         });
+
+        const likeButton = document.createElement('button');
+        likeButton.innerHTML = 'Like';
+        likeButton.addEventListener('click', async () => {
+           const fetchOptions = {
+               method: 'POST',
+               headers: {
+                   'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+               }
+           };
+
+           try {
+               const response = await fetch(url + '/post/likes/' + post.post_id, fetchOptions);
+               const json = await response.json();
+               console.log(json);
+           } catch (e) {
+               console.log(e);
+           }
+        });
+
+        //Create 'Likes' element for the page
+        const likes = document.createElement('p');
+
+        //Create a function that get the likes count for the post from the server
+        const getLikes = async () => {
+          const fetchOptions = {
+              method: 'GET',
+              headers: {
+                  'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+              }
+          };
+          
+          try {
+              const response = await fetch(url + '/post/likes/' + post.post_id, fetchOptions);
+              const json = await response.json();
+              likes.innerHTML = 'Likes: ' + json[0].likes;
+          } catch (e) {
+              console.log(e);
+          }
+        };
+
+        getLikes();
+
         const li = document.createElement('li');
         li.classList.add('light-border');
 
         li.appendChild(h2);
         li.appendChild(figure);
         li.appendChild(p);
+        li.appendChild(likes);
+        if (sessionStorage.getItem('token')) {
+            li.appendChild(likeButton);
+        }
         if (sessionStorage.getItem('id') == post.user_id){
             li.appendChild(delButton);
         }

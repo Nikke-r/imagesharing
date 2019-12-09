@@ -15,7 +15,7 @@ const post_create = (req, res) => {
             res.send('Error adding post');
         }
 
-        if (info!= undefined) {
+        if (info!== undefined) {
             console.log(info.message);
         } else {
             //createthumbnail
@@ -54,7 +54,7 @@ const post_delete = (req, res) => {
             console.log(error);
             res.send('Error deleting post');
         }
-        if (info != undefined) {
+        if (info !== undefined) {
             console.log(error.message);
         } else {
             const params = [req.params.id];
@@ -64,11 +64,40 @@ const post_delete = (req, res) => {
     })(req, res);
 };
 
+const add_like = (req, res) => {
+    passport.authenticate('jwt', ({session: false}), async (error, user, info) => {
+        if (error) {
+            console.log(error);
+        }
+        if (info !== undefined) {
+            console.log(info.message);
+        } else {
+            const params = [user.user_id, req.params.id];
+            const response = await postModel.addLike(params);
+            await res.json(response);
+        }
+    })(req, res);
+};
 
+const get_likes = (req, res) => {
+  passport.authenticate('jwt', ({session: false}), async (error, user, info) => {
+      if (error) {
+          console.log(error);
+      }
+      if (info != undefined) {
+          console.log(info.message);
+      } else {
+          const response = await postModel.getLikes([req.params.id]);
+          await res.json(response);
+      }
+  })(req, res);
+};
 
 module.exports = {
     post_get,
     post_list_get,
     post_create,
     post_delete,
+    add_like,
+    get_likes
 };

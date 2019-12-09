@@ -12,6 +12,10 @@ router.get('/:id', postController.post_get);
 
 router.post('/', upload.single('post'), postController.post_create);
 
+router.post('/likes/:id', postController.add_like);
+
+router.get('/likes/:id', postController.get_likes);
+
 router.delete('/:id', postController.post_delete);
 
 module.exports = router;

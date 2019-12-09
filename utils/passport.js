@@ -31,15 +31,13 @@ passport.use(new JWTStrategy({
     secretOrKey   : process.env.Secret_Token
     },
     (jwtPayload, done) => {
-      if (jwtPayload != null) {
-        //Delete unnecessary info from payload
-        delete jwtPayload.email;
-        delete jwtPayload.username;
-        delete jwtPayload.iat;
+      //Delete unnecessary info from payload
+      delete jwtPayload.email;
+      delete jwtPayload.username;
+      delete jwtPayload.iat;
 
-        //Send payload forward
-        done(null, jwtPayload);
-      }
+      //Send payload forward
+      done(null, jwtPayload);
     }
 ));
 

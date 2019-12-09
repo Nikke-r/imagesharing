@@ -63,10 +63,33 @@ const deletePost = async(params) => {
     }
 };
 
+const addLike = async (params) => {
+  try {
+      const [rows] = await promisePool.execute('INSERT INTO kkk_likes (user_id, post_id) VALUES (?, ?)', params);
+      return rows;
+  } catch (e) {
+      console.log('add like error ' + e);
+      return {errormessage: 'Error adding a like'};
+  }
+};
+
+const getLikes = async (param) => {
+    try {
+        const [rows] = await promisePool.execute('SELECT COUNT(*) AS likes FROM kkk_likes WHERE post_id = ?', param);
+        console.log(rows);
+        return rows;
+    } catch (e) {
+        console.log('getLikes error ' + e);
+        return {errormessage: 'Error getting likes'};
+    }
+};
+
 module.exports = {
     getAllPosts,
     getPost,
     addPost,
     updatePost,
-    deletePost
+    deletePost,
+    addLike,
+    getLikes
 };
