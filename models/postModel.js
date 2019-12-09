@@ -26,7 +26,7 @@ const getPost = async(params) => {
 const addPost = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'INSERT INTO kkk_posts (user_id, date, filename, description) VALUES (?, ?, ?, ?);',
+            'INSERT INTO kkk_posts (user_id, date, filename, description, coordinates) VALUES (?, ?, ?, ?, ?);',
             params,
         );
         return rows;

@@ -5,6 +5,9 @@ const ul = document.querySelector('.main ul');
 //const main = document.getElementsByClassName("main")[0];
 //const forms = document.getElementsByClassName("forms")[0];
 const topnav = document.getElementsByClassName("topnav")[0];
+const closeBtn = document.getElementsByClassName('close')[0];
+const bigView = document.getElementById('bigView');
+const bigImage = document.getElementById('bigImage');
 
 const userHasToken = () => {
     if (sessionStorage.getItem('token') != null) {
@@ -78,7 +81,15 @@ const createPosts = (posts) => {
             img.classList.add('resp');
 
             img.addEventListener('click', () => {
-                img.src = url + '/' + post.filename;
+                bigImage.src = url + '/' + post.filename;
+                bigImage.alt = post.description;
+                bigView.classList.toggle('hide');
+                try {
+                    const coordinates = JSON.parse(post.coordinates);
+                    addMarker(coordinates);
+                } catch (e) {
+                    console.log(e);
+                }
             });
 
             const figure = document.createElement('figure').appendChild(img);
@@ -184,7 +195,7 @@ const createPosts = (posts) => {
                     for (let i = 0; i < json.users.length; i++){
                         if (sessionStorage.getItem('id') === json.users[i].user_id.toString()){
                             likeButton.addEventListener('click', dislike);
-                            likeButton.innerHTML = 'Dislike';
+                            likeButton.innerHTML = 'Unlike';
                             break;
                         } else {
                             likeButton.addEventListener('click', addLike);
@@ -214,9 +225,12 @@ const createPosts = (posts) => {
             ul.appendChild(li);
         });
     }
-
-
 };
+
+closeBtn.addEventListener('click', (event) => {
+   event.preventDefault();
+   bigView.classList.toggle('hide')
+});
 
 const getPosts = async () => {
     try {

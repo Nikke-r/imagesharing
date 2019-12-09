@@ -2,7 +2,7 @@
 const postModel = require('../models/postModel');
 const resize = require('../utils/resize');
 const passport = require('passport');
-const fs = require('fs');
+const imageMeta = require('../utils/imageMetadata');
 
 const post_list_get = async (req, res) => {
     const posts = await postModel.getAllPosts();
@@ -23,6 +23,9 @@ const post_create = (req, res) => {
             try {
                 await resize.makeThumbnail(req.file.path, 'thumbnails/' + req.file.filename, {width: 600, height: 600},);
 
+                //Get coordinates from image
+                const coords = await imageMeta.getCoordinates(req.file.path);
+
                 //Get current day as YYYY-MM-DD format
                 const date = new Date();
                 const year = date.getFullYear();
@@ -30,7 +33,7 @@ const post_create = (req, res) => {
                 const day = date.getDate();
                 const timestamp = `${year}-${month}-${day}`;
 
-                const params = [user.user_id, timestamp, req.file.filename, req.body.description];
+                const params = [user.user_id, timestamp, req.file.filename, req.body.description, coords];
                 const response = await postModel.addPost(params);
                 const post = await postModel.getPost([response.insertId]);
                 await res.json(post);
