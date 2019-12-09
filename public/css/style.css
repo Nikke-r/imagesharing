@@ -29,14 +29,12 @@ body {
 ul {
   margin: 0;
   padding: 0;
-  list-style-type: none;
-  display: flex;
   flex-wrap: nowrap;
 }
 
 li {
-  width: 30%;
-  margin: .5em;
+  width: 90%;
+  margin: 20px;
 }
 
 figure {
@@ -59,7 +57,7 @@ figure {
 
 input, button, select {
   display: inline-block;
-  width: 100%;
+  width: 20%;
   margin: .5em 0;
 }
 
