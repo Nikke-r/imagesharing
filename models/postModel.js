@@ -51,11 +51,9 @@ const updatePost = async(params) => {
 };
 const deletePost = async(params) => {
     try {
-        const [rows] = await promisePool.execute(
-            'DELETE kkk_likes, kkk_posts FROM kkk_likes JOIN kkk_posts ON kkk_likes.post_id = kkk_posts.post_id WHERE kkk_likes.post_id = ?',
-            params,
-        );
-        return rows;
+        const [likes] = await promisePool.execute('DELETE FROM kkk_likes WHERE post_id = ?', params);
+        const [post] = await promisePool.execute('DELETE FROM kkk_posts WHERE post_id = ?', params);
+        return `${likes}, ${post}`;
     }catch(e){
         console.log('error', e.message);
         return {error: 'error in database query'};

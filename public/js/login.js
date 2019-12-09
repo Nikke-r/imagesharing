@@ -21,6 +21,7 @@ loginForm.addEventListener("submit", async (evt) => {
         } else {
             sessionStorage.setItem('token', json.token);
             sessionStorage.setItem('id', json.user.user_id);
+            sessionStorage.setItem('admin', json.user.admin);
         }
     } catch (e) {
         console.log(e);

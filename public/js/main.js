@@ -72,7 +72,6 @@ const createPosts = (posts) => {
         li.appendChild(p);
         ul.appendChild(li);
     } else {
-
         posts.forEach((post) =>{
             const img = document.createElement('img');
             img.src = url + '/thumbnails/' + post.filename;
@@ -111,6 +110,51 @@ const createPosts = (posts) => {
                 }
             });
 
+            //Create Like/Dislike button
+            const likeButton = document.createElement('button');
+
+            //Create function that removes the like from the db and change the eventlistener
+            const dislike = async () => {
+                const fetchOptions = {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                    }
+                };
+
+                try {
+                    const response = await fetch(url + '/post/likes/' + post.post_id, fetchOptions);
+                    const json = await response.json();
+                    console.log(json);
+                    getLikes();
+                    likeButton.removeEventListener('click', dislike);
+                    likeButton.addEventListener('click', addLike);
+                } catch (e) {
+                    console.log(e);
+                }
+            };
+
+            //Create function that adds the like from the db and change the eventlistener
+            const addLike = async () => {
+                const fetchOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                    }
+                };
+
+                try {
+                    const response = await fetch(url + '/post/likes/' + post.post_id, fetchOptions);
+                    const json = await response.json();
+                    console.log(json);
+                    getLikes();
+                    likeButton.removeEventListener('click', addLike);
+                    likeButton.addEventListener('click', dislike);
+                } catch (e) {
+                    console.log(e);
+                }
+            };
+
             //Create 'Likes' element for the page
             const likes = document.createElement('p');
 
@@ -136,9 +180,10 @@ const createPosts = (posts) => {
 
                     //Check if current use have liked the post and set an eventlistener to likebutton
                     for (let i = 0; i < json.users.length; i++){
-                        if (sessionStorage.getItem('id') == json.users[i].user_id){
+                        if (sessionStorage.getItem('id') === json.users[i].user_id.toString()){
                             likeButton.addEventListener('click', dislike);
                             likeButton.innerHTML = 'Dislike';
+                            break;
                         } else {
                             likeButton.addEventListener('click', addLike);
                             likeButton.innerHTML = 'Like';
@@ -151,53 +196,6 @@ const createPosts = (posts) => {
 
             getLikes();
 
-            //Create Like/Dislike button
-            const likeButton = document.createElement('button');
-
-            //Create function that removes the like from the db and change the eventlistener
-            const dislike = async () => {
-                const fetchOptions = {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-                    }
-                };
-
-                try {
-                    const response = await fetch(url + '/post/likes/' + post.post_id, fetchOptions);
-                    const json = await response.json();
-                    console.log(json);
-                    likeButton.innerHTML = 'Like';
-                    getLikes();
-                    likeButton.removeEventListener('click', dislike);
-                    likeButton.addEventListener('click', addLike);
-                } catch (e) {
-                    console.log(e);
-                }
-            };
-
-            //Create function that adds the like from the db and change the eventlistener
-            const addLike = async () => {
-                const fetchOptions = {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
-                    }
-                };
-
-                try {
-                    const response = await fetch(url + '/post/likes/' + post.post_id, fetchOptions);
-                    const json = await response.json();
-                    console.log(json);
-                    likeButton.innerHTML = 'Dislike';
-                    getLikes();
-                    likeButton.removeEventListener('click', addLike);
-                    likeButton.addEventListener('click', dislike);
-                } catch (e) {
-                    console.log(e);
-                }
-            };
-
             const li = document.createElement('li');
             li.classList.add('light-border');
 
@@ -208,7 +206,7 @@ const createPosts = (posts) => {
             if (sessionStorage.getItem('token')) {
                 li.appendChild(likeButton);
             }
-            if (sessionStorage.getItem('id') == post.user_id){
+            if (sessionStorage.getItem('id') === post.user_id.toString() || sessionStorage.getItem('admin') === '1'){
                 li.appendChild(delButton);
             }
             ul.appendChild(li);
