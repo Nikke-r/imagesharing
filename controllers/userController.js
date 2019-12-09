@@ -1,5 +1,6 @@
 'use strict';
 const userModel = require('../models/userModel');
+const passport = require('passport');
 
 //const users = userModel.users;
 
@@ -9,14 +10,13 @@ const user_list_get = async (req, res) => {
 };
 
 const user_get = async (req, res) => {
-    const params = [req.params.id];
-    const user = await userModel.getUser(params);
-    await res.json(user[0]);
+    const result = await userModel.getUser([req.params.id]);
+    await res.json(result[0]);
 };
 
 const user_get_session = async (req, res) => {
-    const [user] = await userModel.getUser([req.params.id]);
-    await res.json(user);
+    const [result] = await userModel.getUser([req.params.id]);
+    await res.json(result);
 };
 
 const user_create = async (req, res) => {

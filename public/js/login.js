@@ -20,8 +20,7 @@ loginForm.addEventListener("submit", async (evt) => {
             alert(json.message);
         } else {
             sessionStorage.setItem('token', json.token);
-            model.style.display = "none";
-            window.location.replace("index.html")
+            sessionStorage.setItem('id', json.user.user_id);
         }
     } catch (e) {
         console.log(e);

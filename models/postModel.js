@@ -26,7 +26,7 @@ const getPost = async(params) => {
 const addPost = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'INSERT INTO kkk_posts (filename, description) VALUES (?, ?);',
+            'INSERT INTO kkk_posts (user_id, date, filename, description) VALUES (?, ?, ?, ?);',
             params,
         );
         return rows;
@@ -42,8 +42,6 @@ const updatePost = async(params) => {
             'UPDATE kkk_posts SET description = ? WHERE kkk_posts.post_id = ?;',
             params,
         );
-        console.log(rows);
-        console.log('database query succesful');
         return rows;
     }catch(e){
         console.log('error', e.message);
@@ -52,13 +50,11 @@ const updatePost = async(params) => {
     }
 };
 const deletePost = async(params) => {
-    console.log(params);
     try {
         const [rows] = await promisePool.execute(
-            'DELETE FROM kkk_posts WHERE kkk_post.post_id = ?;',
+            'DELETE FROM kkk_posts WHERE post_id = ?;',
             params,
         );
-        console.log('database query successful');
         return rows;
     }catch(e){
         console.log('error', e.message);

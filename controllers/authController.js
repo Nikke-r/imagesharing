@@ -6,7 +6,7 @@ const {validationResult} = require('express-validator');
 const userModel = require('../models/userModel');
 
 const login = (req, res) => {
-    passport.authenticate('local', {session: false}, (err, user, info) => {
+    passport.authenticate('local', {session: false, succesRedirect: '/'}, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
                 message: 'Something is not right',
@@ -38,7 +38,7 @@ const register = async (req, res, next) => {
         ];
         if (await userModel.addUser(params)) {
             params[2] = "";
-            res.json(params);
+           await res.json(params);
             next();
         } else {
             res.status(400).json({error: 'register error'});
