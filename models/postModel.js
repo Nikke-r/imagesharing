@@ -4,7 +4,7 @@ const promisePool = pool.promise();
 
 const getAllPosts = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT kkk_posts.*, kkk_users.username FROM kkk_posts left join kkk_users on kkk_posts.user_id = kkk_users.username');
+        const [rows] = await promisePool.query('SELECT kkk_posts.*, kkk_users.username AS username FROM kkk_posts LEFT JOIN kkk_users ON kkk_posts.user_id = kkk_users.user_id');
         return rows;
     } catch (e) {
         console.log('error', e.message);
@@ -26,7 +26,7 @@ const getPost = async(params) => {
 const addPost = async(params) => {
     try {
         const [rows] = await promisePool.execute(
-            'INSERT INTO kkk_posts (filename, description) VALUES (?, ?);',
+            'INSERT INTO kkk_posts (user_id, date, filename, description) VALUES (?, ?, ?, ?);',
             params,
         );
         return rows;
@@ -42,8 +42,6 @@ const updatePost = async(params) => {
             'UPDATE kkk_posts SET description = ? WHERE kkk_posts.post_id = ?;',
             params,
         );
-        console.log(rows);
-        console.log('database query succesful');
         return rows;
     }catch(e){
         console.log('error', e.message);
@@ -52,18 +50,54 @@ const updatePost = async(params) => {
     }
 };
 const deletePost = async(params) => {
-    console.log(params);
     try {
-        const [rows] = await promisePool.execute(
-            'DELETE FROM kkk_posts WHERE kkk_post.post_id = ?;',
-            params,
-        );
-        console.log('database query successful');
-        return rows;
+        const [likes] = await promisePool.execute('DELETE FROM kkk_likes WHERE post_id = ?', params);
+        const [post] = await promisePool.execute('DELETE FROM kkk_posts WHERE post_id = ?', params);
+        return {likes, post};
     }catch(e){
         console.log('error', e.message);
         return {error: 'error in database query'};
 
+    }
+};
+
+const addLike = async (params) => {
+  try {
+      const [rows] = await promisePool.execute('INSERT INTO kkk_likes (user_id, post_id) VALUES (?, ?)', params);
+      return rows;
+  } catch (e) {
+      console.log('add like error ' + e);
+      return {errormessage: 'Error adding a like'};
+  }
+};
+
+const getLikes = async (param) => {
+    try {
+        const [rows] = await promisePool.execute('SELECT COUNT(post_id) AS likes FROM kkk_likes WHERE post_id = ?', param);
+        return rows;
+    } catch (e) {
+        console.log('getLikes error ' + e);
+        return {errormessage: 'Error getting likes'};
+    }
+};
+
+const getLikeNames = async (param) => {
+    try {
+        const [rows] = await promisePool.execute('SELECT user_id FROM kkk_likes WHERE post_id = ?', param);
+        return rows;
+    } catch (e) {
+        console.log('getLikeNames error + ' + e);
+        return {errormessage: 'Cannot get like names'};
+    }
+};
+
+const deleteLike = async (params) => {
+    try {
+        const [rows] = await promisePool.execute('DELETE FROM kkk_likes WHERE user_id = ? AND post_id = ?', params);
+        return rows;
+    } catch (e) {
+        console.log(e);
+        return {errormessage: 'Error disliking the post'}
     }
 };
 
@@ -72,5 +106,9 @@ module.exports = {
     getPost,
     addPost,
     updatePost,
-    deletePost
+    deletePost,
+    addLike,
+    getLikes,
+    getLikeNames,
+    deleteLike
 };
