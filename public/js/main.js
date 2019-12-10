@@ -1,6 +1,5 @@
 'use strict';
-//const url = 'http://localhost:3000';
-const url = 'http://10.114.34.121/app';
+const url = 'http://localhost:3000';
 
 const ul = document.querySelector('.main ul');
 const topnav = document.getElementsByClassName("topnav")[0];
