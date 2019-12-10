@@ -53,7 +53,7 @@ const createPosts = (posts) => {
         const a = document.createElement('a');
         const p = document.createElement('p');
         const li = document.createElement('li');
-        a.href = url + '/login.html';
+        a.href = url + 'login.html';
         a.innerHTML = 'here';
         p.innerHTML = 'No added pictures yet! Login or create an account and add a picture ';
         p.appendChild(a);
@@ -66,7 +66,7 @@ const createPosts = (posts) => {
         const a = document.createElement('a');
         const p = document.createElement('p');
         const li = document.createElement('li');
-        a.href = url + '/profile.html';
+        a.href = url + 'upload.html';
         a.innerHTML = 'here';
         p.innerHTML = 'No added pictures yet! Be the first to upload a picture ';
         p.appendChild(a);
