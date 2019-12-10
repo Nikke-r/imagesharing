@@ -1,5 +1,4 @@
-//const url = 'http://localhost:3000';
-const url = 'http://10.114.34.121/app';
+const url = 'http://localhost:3000';
 
 const main = document.getElementsByClassName("main")[0];
 const forms = document.getElementsByClassName('forms')[0];
