@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000';
+const url = 'http://10.114.32.155/app/';
 
 const forms = document.getElementsByClassName("forms")[0];
 const topnav = document.getElementsByClassName("topnav")[0];
