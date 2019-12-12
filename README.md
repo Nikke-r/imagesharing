@@ -15,6 +15,7 @@ This projects goal was to learn basic concepts of web technology. It's a basic i
     <li>DB_NAME=name_of_the_database</li>
     <li>Secret_Token=your_secret_token</li>
   </ul>
+  <li>Create folders named 'uploads' and 'thumbnails' to the project folder</li>
   <li>Change the URL's in the .js files to match your server/host (for example the one in the main.js)</li>
   <li>Run the app.js with node or nodemon. Default port number is 3000</li>
 </ul>
